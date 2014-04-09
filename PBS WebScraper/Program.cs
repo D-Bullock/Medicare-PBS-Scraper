@@ -14,9 +14,9 @@ namespace PBS_WebScraper {
 			var idFile = outputDir + "//List_of_items.csv";
 			var startMonth = new DateTime(2013, 4, 1);
 			var endMonth = startMonth;
-			var delayPeriod = 3;
-			new Parser().Parse(outputDir, idFile, startMonth, endMonth, delayPeriod);
+			var delayPeriod = 2;
+			var parser = new Parser();
+			parser.Parse(outputDir, idFile, startMonth, endMonth, delayPeriod);
 		}
-
 	}
 }

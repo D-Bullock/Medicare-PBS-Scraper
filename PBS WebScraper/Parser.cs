@@ -8,13 +8,21 @@ using System.Threading.Tasks;
 
 namespace PBS_WebScraper {
 
+	// A delegate type for hooking up change notifications.
+	public delegate void CompetionHandler(object sender, decimal percentComplete);
+
 	/// <summary>
 	/// The interface of the 
 	/// </summary>
-	partial class Parser {
+	public partial class Parser {
 		private bool HasErrored = false;
+		private static bool Debug = false;
+
+		public event CompetionHandler Changed;
 		public void Parse(string outputDir, string idFile, DateTime startMonth, DateTime endMonth, int delayPeriod) {
-			var ids = ReadIdsFromFile(idFile);
+			IEnumerable<string> ids;
+			ids = string.Join(",", File.ReadAllLines(idFile)).Split(',');
+			var totalIdCount = ids.Count();
 
 			ClearFiles(outputDir, startMonth, endMonth);
 
@@ -35,8 +43,18 @@ namespace PBS_WebScraper {
 						ErroredIds(ids, outputDir);
 					}
 					ids = ids.Skip(20);
+					OnChanged(totalIdCount, ids.Count());
 				}
 				startMonth = startMonth.AddMonths(1);
+			}
+		}
+
+		protected virtual void OnChanged(int total, int done) {
+			OnChanged((decimal)done / total);
+		}
+		protected virtual void OnChanged(decimal percentCompelete) {
+			if (Changed != null) {
+				Changed(this, percentCompelete);
 			}
 		}
 
@@ -49,10 +67,6 @@ namespace PBS_WebScraper {
 			File.AppendAllText(errorFile, string.Join(",", ids) + Environment.NewLine);
 		}
 
-
-		private IEnumerable<string> ReadIdsFromFile(string idFile) {
-			return string.Join(",", File.ReadAllLines(idFile)).Split(',');
-		}
 
 		private void ClearFiles(string outputDir, DateTime startMonth, DateTime endMonth) {
 			// Delete the error file
