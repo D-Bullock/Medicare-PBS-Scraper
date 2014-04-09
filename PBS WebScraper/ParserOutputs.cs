@@ -17,7 +17,9 @@ namespace PBS_WebScraper {
 
 			// write the output to file
 			var outputFile = outputFolder + @"\State_Services_" + month.ToString("MMMyyyy") + ".csv"; // TODO better checking of the folder name
-			File.AppendAllText(outputFile, url + Environment.NewLine);
+			if (Debug) {
+				File.AppendAllText(outputFile, url + Environment.NewLine);
+			}
 			File.AppendAllLines(outputFile, data.Select(d => d.ToString()));
 		}
 
@@ -28,7 +30,9 @@ namespace PBS_WebScraper {
 
 			// write the output to file
 			var outputFile = outputFolder + @"\State_Benefits_" + month.ToString("MMMyyyy") + ".csv"; // TODO better checking of the folder name
-			File.AppendAllText(outputFile, url + Environment.NewLine);
+			if (Debug) {
+				File.AppendAllText(outputFile, url + Environment.NewLine);
+			}
 			File.AppendAllLines(outputFile, data.Select(d => d.ToString()));
 		}
 
@@ -118,7 +122,9 @@ namespace PBS_WebScraper {
 
 			// write the output to file
 			var outputFile = outputFolder + @"\PatCat_Services_" + month.ToString("MMMyyyy") + ".csv"; // TODO better checking of the folder name
-			File.AppendAllText(outputFile, url + Environment.NewLine);
+			if (Debug) {
+				File.AppendAllText(outputFile, url + Environment.NewLine);
+			}
 			File.AppendAllLines(outputFile, data.Select(d => d.ToString()));
 		}
 
@@ -128,7 +134,9 @@ namespace PBS_WebScraper {
 			var data = Shared_Output3And4(month, url);
 			// write the output to file
 			var outputFile = outputFolder + @"\PatCat_Benefits_" + month.ToString("MMMyyyy") + ".csv"; // TODO better checking of the folder name
-			File.AppendAllText(outputFile, url + Environment.NewLine);
+			if (Debug) {
+				File.AppendAllText(outputFile, url + Environment.NewLine);
+			}
 			File.AppendAllLines(outputFile, data.Select(d => d.ToString()));
 		}
 
