@@ -78,6 +78,7 @@ namespace PBS_WebScraper {
 
 					// Edge case: Last lines that are totals (end of document) We don't want to know anything after this point
 					if (dataRow.Type.Equals("All items", StringComparison.CurrentCultureIgnoreCase)) {
+						i = rows.Count; // Force all loops to break
 						break;
 					}
 
