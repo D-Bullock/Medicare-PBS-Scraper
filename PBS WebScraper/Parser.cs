@@ -40,7 +40,7 @@ namespace PBS_WebScraper {
 						Output3(outputDir, currentIds, startMonth);
 						Output4(outputDir, currentIds, startMonth);
 					} catch (NullReferenceException) {
-						ErroredIds(ids, outputDir);
+						ErroredIds(currentIds, outputDir);
 					}
 					ids = ids.Skip(20);
 					OnChanged(totalIdCount, ids.Count());
