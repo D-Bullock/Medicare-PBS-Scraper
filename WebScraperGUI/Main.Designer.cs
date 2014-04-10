@@ -76,6 +76,7 @@
 			// FromDateTimePicker
 			// 
 			this.FromDateTimePicker.CustomFormat = "MM / yyyy";
+			this.FromDateTimePicker.Format = System.Windows.Forms.DateTimePickerFormat.Custom;
 			this.FromDateTimePicker.Location = new System.Drawing.Point(97, 104);
 			this.FromDateTimePicker.Name = "FromDateTimePicker";
 			this.FromDateTimePicker.Size = new System.Drawing.Size(200, 20);
@@ -103,6 +104,7 @@
 			// ToDateTimePicker
 			// 
 			this.ToDateTimePicker.CustomFormat = "MM / yyyy";
+			this.ToDateTimePicker.Format = System.Windows.Forms.DateTimePickerFormat.Custom;
 			this.ToDateTimePicker.Location = new System.Drawing.Point(405, 104);
 			this.ToDateTimePicker.Name = "ToDateTimePicker";
 			this.ToDateTimePicker.Size = new System.Drawing.Size(200, 20);

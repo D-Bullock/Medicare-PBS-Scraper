@@ -81,6 +81,7 @@
     <ProjectReference Include="..\PBS WebScraper\WebScraperCommandLine.csproj">
       <Project>{7cba95bf-46e8-4674-b00d-5e1b347795f1}</Project>
       <Name>WebScraperCommandLine</Name>
+      <EmbedInteropTypes>False</EmbedInteropTypes>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

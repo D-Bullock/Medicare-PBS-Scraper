@@ -32,7 +32,7 @@ namespace PBS_WebScraper {
 
 			while (startMonth <= endMonth) { // Go through each month in range
 				while (ids.Count() != 0) { // Go through every ID specified
-					Thread.Sleep(TimeSpan.FromSeconds(random.Next(delayPeriod / 2, delayPeriod * 2)));
+					Thread.Sleep(random.Next(1000 * delayPeriod / 2, 100 * delayPeriod * 2));
 					var currentIds = ids.Take(20).ToArray();
 					try {
 						Output1(outputDir, currentIds, startMonth);
@@ -50,7 +50,7 @@ namespace PBS_WebScraper {
 		}
 
 		protected virtual void OnChanged(int total, int done) {
-			OnChanged((decimal)done / total);
+			OnChanged(1 - (decimal)done / total);
 		}
 		protected virtual void OnChanged(decimal percentCompelete) {
 			if (Changed != null) {

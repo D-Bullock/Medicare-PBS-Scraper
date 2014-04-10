@@ -48,7 +48,7 @@ namespace WebScraperGUI {
 
 			var parser = new Parser();
 			parser.Changed += new CompetionHandler(delegate(object parser2, decimal complete) {
-				backgroundWorker.ReportProgress((int)(100 - complete * 100));
+				backgroundWorker.ReportProgress((int)(complete * 100));
 			});
 
 			backgroundWorker.DoWork += new DoWorkEventHandler(delegate(object o, DoWorkEventArgs args) {
@@ -75,5 +75,6 @@ namespace WebScraperGUI {
 
 			backgroundWorker.RunWorkerAsync();
 		}
+
 	}
 }
