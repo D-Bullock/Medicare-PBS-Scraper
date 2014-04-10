@@ -3,9 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2013
 VisualStudioVersion = 12.0.30110.0
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebScraperCommandLine", "PBS WebScraper\WebScraperCommandLine.csproj", "{7CBA95BF-46E8-4674-B00D-5E1B347795F1}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebScraper.Core", "WebScraper.Core\WebScraper.Core.csproj", "{7CBA95BF-46E8-4674-B00D-5E1B347795F1}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebScraperGUI", "WebScraperGUI\WebScraperGUI.csproj", "{92FF0D5A-F1A5-4D4F-B6B5-2D8061CD73E5}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebScraper.GUI", "WebScraper.GUI\WebScraper.GUI.csproj", "{92FF0D5A-F1A5-4D4F-B6B5-2D8061CD73E5}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

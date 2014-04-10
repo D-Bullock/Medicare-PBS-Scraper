@@ -78,9 +78,9 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\PBS WebScraper\WebScraperCommandLine.csproj">
+    <ProjectReference Include="..\WebScraper.Core\WebScraper.Core.csproj">
       <Project>{7cba95bf-46e8-4674-b00d-5e1b347795f1}</Project>
-      <Name>WebScraperCommandLine</Name>
+      <Name>WebScraper.Core</Name>
       <EmbedInteropTypes>False</EmbedInteropTypes>
     </ProjectReference>
   </ItemGroup>
