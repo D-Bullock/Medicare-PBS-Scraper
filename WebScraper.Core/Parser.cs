@@ -19,33 +19,33 @@ namespace PBS_WebScraper {
 		private static bool Debug = false;
 
 		public event CompetionHandler Changed;
-		public void Parse(string outputDir, string idFile, DateTime startMonth, DateTime endMonth, int delayPeriod) {
+		public void Parse(string outputDir, string idFile, DateTime currentMonth, DateTime endMonth, int delayPeriod) {
 			IEnumerable<string> ids;
 			ids = string.Join(",", File.ReadAllLines(idFile)).Split(',');
 			var totalIdCount = ids.Count();
 
-			ClearFiles(outputDir, startMonth, endMonth);
+			ClearFiles(outputDir, currentMonth, endMonth);
 
 			// This will generate delays
 			var random = new Random();
 
 
-			while (startMonth <= endMonth) { // Go through each month in range
+			while (currentMonth <= endMonth) { // Go through each month in range
 				while (ids.Count() != 0) { // Go through every ID specified
-					Thread.Sleep(random.Next(1000 * delayPeriod / 2, 100 * delayPeriod * 2));
+					Thread.Sleep(random.Next(1000 * delayPeriod / 2, 1000 * delayPeriod * 2));
 					var currentIds = ids.Take(20).ToArray();
 					try {
-						Output1(outputDir, currentIds, startMonth);
-						Output2(outputDir, currentIds, startMonth);
-						Output3(outputDir, currentIds, startMonth);
-						Output4(outputDir, currentIds, startMonth);
+						Output1(outputDir, currentIds, currentMonth);
+						Output2(outputDir, currentIds, currentMonth);
+						Output3(outputDir, currentIds, currentMonth);
+						Output4(outputDir, currentIds, currentMonth);
 					} catch (NullReferenceException) {
-						ErroredIds(currentIds, outputDir);
+						ErroredIds(currentIds, currentMonth, outputDir);
 					}
 					ids = ids.Skip(20);
 					OnChanged(totalIdCount, ids.Count());
 				}
-				startMonth = startMonth.AddMonths(1);
+				currentMonth = currentMonth.AddMonths(1);
 			}
 		}
 
@@ -75,7 +75,7 @@ namespace PBS_WebScraper {
 				File.WriteAllText(errorFile, "One or more of the following Ids have generated an error. To determine which, try loading the IDs into the web environment and it should correct you" + Environment.NewLine);
 			}
 			HasErrored = true;
-			File.AppendAllText(errorFile, "Occured whilst parsing "+month.ToString("MMM yyyy") + Environment.NewLine);
+			File.AppendAllText(errorFile, "Occured whilst parsing " + month.ToString("MMM yyyy") + Environment.NewLine);
 			File.AppendAllText(errorFile, string.Join(",", ids) + Environment.NewLine);
 		}
 
