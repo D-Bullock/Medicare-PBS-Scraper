@@ -49,21 +49,33 @@ namespace PBS_WebScraper {
 			}
 		}
 
+
+		/// <summary>
+		/// A wrapper for OnChanged(PercentComplete)
+		/// </summary>
+		/// <param name="total"></param>
+		/// <param name="done"></param>
 		protected virtual void OnChanged(int total, int done) {
 			OnChanged(1 - (decimal)done / total);
 		}
+
+		/// <summary>
+		/// Triggers the onchange event. The percent complete is in decimal (ie 15% = 0.15)
+		/// </summary>
+		/// <param name="percentCompelete"></param>
 		protected virtual void OnChanged(decimal percentCompelete) {
 			if (Changed != null) {
 				Changed(this, percentCompelete);
 			}
 		}
 
-		private void ErroredIds(IEnumerable<string> ids, string outputDir) {
+		private void ErroredIds(IEnumerable<string> ids, DateTime month, string outputDir) {
 			var errorFile = outputDir + "\\Errors.txt";
 			if (!HasErrored) {
 				File.WriteAllText(errorFile, "One or more of the following Ids have generated an error. To determine which, try loading the IDs into the web environment and it should correct you" + Environment.NewLine);
 			}
 			HasErrored = true;
+			File.AppendAllText(errorFile, "Occured whilst parsing "+month.ToString("MMM yyyy") + Environment.NewLine);
 			File.AppendAllText(errorFile, string.Join(",", ids) + Environment.NewLine);
 		}
 
