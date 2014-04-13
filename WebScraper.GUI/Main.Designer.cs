@@ -23,6 +23,7 @@
 		/// the contents of this method with the code editor.
 		/// </summary>
 		private void InitializeComponent() {
+			System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Main));
 			this.label1 = new System.Windows.Forms.Label();
 			this.txtOutputDir = new System.Windows.Forms.TextBox();
 			this.BtnOutputFile = new System.Windows.Forms.Button();
@@ -242,6 +243,7 @@
 			this.Controls.Add(this.BtnOutputFile);
 			this.Controls.Add(this.txtOutputDir);
 			this.Controls.Add(this.label1);
+			this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
 			this.Name = "Main";
 			this.Text = "Web Scraper";
 			((System.ComponentModel.ISupportInitialize)(this.numDelay)).EndInit();
