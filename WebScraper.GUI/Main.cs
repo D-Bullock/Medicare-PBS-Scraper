@@ -16,6 +16,38 @@ namespace WebScraperGUI {
 			InitializeComponent();
 			ToDateTimePicker.Value = DateTime.Now;
 			FromDateTimePicker.Value = DateTime.Now;
+
+			// Set up background worker
+			var parser = new Parser();
+			parser.Changed += new CompetionHandler(delegate(object parser2, decimal complete) {
+				backgroundWorker.ReportProgress((int)(complete * 100));
+			});
+
+			backgroundWorker.DoWork += new DoWorkEventHandler(delegate(object o, DoWorkEventArgs args) {
+				// Work out directory
+				var outputDir = string.IsNullOrWhiteSpace(txtOutputDir.Text) ?
+					Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location) :
+					txtOutputDir.Text;
+				//try {
+					parser.Parse(outputDir, txtIDsFile.Text, FromDateTimePicker.Value, ToDateTimePicker.Value, (int)numDelay.Value);
+				//} catch (Exception ex) {
+				//	MessageBox.Show(ex.Message, "Error:" + ex.GetType().ToString(), MessageBoxButtons.OK, MessageBoxIcon.Error);
+				//}
+			});
+
+			backgroundWorker.ProgressChanged += new ProgressChangedEventHandler(
+				delegate(object o, ProgressChangedEventArgs args) {
+					progressBar1.Value = args.ProgressPercentage;
+				}
+			);
+
+			backgroundWorker.RunWorkerCompleted += new RunWorkerCompletedEventHandler(
+				delegate(object o, RunWorkerCompletedEventArgs args) {
+					progressBar1.Visible = false;
+					button3.Visible = true;
+					MessageBox.Show("Finished scraping data");
+				}
+			);
 		}
 
 
@@ -38,40 +70,10 @@ namespace WebScraperGUI {
 				MessageBox.Show("Please enter where the IDs are located.");
 				return;
 			}
-			// Work out directory
-			var outputDir = string.IsNullOrWhiteSpace(txtOutputDir.Text) ?
-				Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location) :
-				txtOutputDir.Text;
+
 			button3.Visible = false;
 			progressBar1.Visible = true;
 			progressBar1.Enabled = true;
-
-			var parser = new Parser();
-			parser.Changed += new CompetionHandler(delegate(object parser2, decimal complete) {
-				backgroundWorker.ReportProgress((int)(complete * 100));
-			});
-
-			backgroundWorker.DoWork += new DoWorkEventHandler(delegate(object o, DoWorkEventArgs args) {
-				try {
-					parser.Parse(outputDir, txtIDsFile.Text, FromDateTimePicker.Value, ToDateTimePicker.Value, (int)numDelay.Value);
-				} catch (Exception ex) {
-					MessageBox.Show(ex.Message, "Error:" + ex.GetType().ToString(), MessageBoxButtons.OK, MessageBoxIcon.Error);
-				}
-			});
-
-			backgroundWorker.ProgressChanged += new ProgressChangedEventHandler(
-				delegate(object o, ProgressChangedEventArgs args) {
-					progressBar1.Value = args.ProgressPercentage;
-				}
-			);
-
-			backgroundWorker.RunWorkerCompleted += new RunWorkerCompletedEventHandler(
-				delegate(object o, RunWorkerCompletedEventArgs args) {
-					progressBar1.Visible = false;
-					button3.Visible = true;
-					MessageBox.Show("Finished scraping data");
-				}
-			);
 
 			backgroundWorker.RunWorkerAsync();
 		}
