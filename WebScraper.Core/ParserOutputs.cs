@@ -37,12 +37,22 @@ namespace PBS_WebScraper {
 		}
 
 		private static List<DataRow> Shared_Output1And2(DateTime month, string url) {
-			// The accepted titles
-			string[] States = new String[] { "NSW", "VIC", "QLD", "SA", "WA", "TAS", "ACT" };
+			// This will hold all the states
+			var States = new List<string> ();
 
 			HtmlWeb web = new HtmlWeb();
 			HtmlDocument doc = web.Load(url);
 
+			// Parse the header to work out how many of each category and what they are called.
+			var thead = doc.DocumentNode.SelectSingleNode("//table[@class='table']//thead");
+			var headerRows = thead.SelectNodes(".//tr");
+			
+			// work out the how many PBS and RPBS items there are
+			foreach (var headerItem in headerRows[1].SelectNodes(".//th")) {
+				States.Add(headerItem.InnerText.Trim());
+			}
+
+			// Read the data
 			var tbody = doc.DocumentNode.SelectNodes("//table[@class='table']//tbody");
 
 			HtmlNodeCollection rows = tbody[0].SelectNodes(".//tr");
@@ -56,7 +66,7 @@ namespace PBS_WebScraper {
 					continue;
 				}
 				// Go through and make a row for each value
-				for (var j = 0; j < values.Count && j < States.Length; j++) { // Using for loop so we can know the index.
+				for (var j = 0; j < values.Count && j < States.Count; j++) { // Using for loop so we can know the index.
 					var headers = rows[i].SelectNodes(".//th");
 
 					DataRow dataRow;
