@@ -28,11 +28,11 @@ namespace WebScraperGUI {
 				var outputDir = string.IsNullOrWhiteSpace(txtOutputDir.Text) ?
 					Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location) :
 					txtOutputDir.Text;
-				//try {
+				try {
 					parser.Parse(outputDir, txtIDsFile.Text, FromDateTimePicker.Value, ToDateTimePicker.Value, (int)numDelay.Value);
-				//} catch (Exception ex) {
-				//	MessageBox.Show(ex.Message, "Error:" + ex.GetType().ToString(), MessageBoxButtons.OK, MessageBoxIcon.Error);
-				//}
+				} catch (Exception ex) {
+					MessageBox.Show(ex.Message, "Error:" + ex.GetType().ToString(), MessageBoxButtons.OK, MessageBoxIcon.Error);
+				}
 			});
 
 			backgroundWorker.ProgressChanged += new ProgressChangedEventHandler(
