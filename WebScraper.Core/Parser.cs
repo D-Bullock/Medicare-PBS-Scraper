@@ -79,22 +79,21 @@ namespace PBS_WebScraper {
 		}
 
 
-		private void ClearFiles(string outputDir, DateTime startMonth, DateTime endMonth) {
-			// Delete the error file
-			try {
-				File.Delete(outputDir + "\\Errors.txt");
-			} catch { }
+		private void ClearFiles(string outputDir, DateTime currentMonth, DateTime endMonth) {
 
 			// Delete the other files in range
 			var fileNames = new string[] { "PatCat_Benefits", "PatCat_Services", "State_Benefits", "State_Services" };
-			while (startMonth <= endMonth) {
+			while (currentMonth <= endMonth) {
 				foreach (var fileName in fileNames) {
 					try {
-						var deleteFile = outputDir + "\\" + fileName + "_" + startMonth.ToString("MMMyyyy") + ".csv";
+						var deleteFile = outputDir + "\\" + fileName + "_" + currentMonth.ToString("MMMyyyy") + ".csv";
+						File.Delete(deleteFile);
+						// Delete the error file
+						deleteFile = outputDir + "\\" + currentMonth.ToString("MMMyyyy") + "_Errors.txt";
 						File.Delete(deleteFile);
 					} catch { }
 				}
-				startMonth = startMonth.AddMonths(1);
+				currentMonth = currentMonth.AddMonths(1);
 			}
 		}
 	}
