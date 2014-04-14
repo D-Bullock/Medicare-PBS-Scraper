@@ -70,12 +70,11 @@ namespace PBS_WebScraper {
 		}
 
 		private void ErroredIds(IEnumerable<string> ids, DateTime month, string outputDir) {
-			var errorFile = outputDir + "\\Errors.txt";
+			var errorFile = outputDir + "\\" + month.ToString("MMMyyyy") + "_Errors.txt";
 			if (!HasErrored) {
 				File.WriteAllText(errorFile, "One or more of the following Ids have generated an error. To determine which, try loading the IDs into the web environment and it should correct you" + Environment.NewLine);
 			}
 			HasErrored = true;
-			File.AppendAllText(errorFile, "Occured whilst parsing " + month.ToString("MMM yyyy") + Environment.NewLine);
 			File.AppendAllText(errorFile, string.Join(",", ids) + Environment.NewLine);
 		}
 
